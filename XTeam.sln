@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTeam", "XTeam\XTeam.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTeam.Tests", "XTeam.Tests\XTeam.Tests.csproj", "{0DB2C53F-C7BD-41B2-B49B-5049E7844FFD}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "XTeam.DB", "XTeam.DB\XTeam.DB.sqlproj", "{B1C5D019-F922-4CCE-BBCE-A97949BD3735}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{0DB2C53F-C7BD-41B2-B49B-5049E7844FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB2C53F-C7BD-41B2-B49B-5049E7844FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DB2C53F-C7BD-41B2-B49B-5049E7844FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C5D019-F922-4CCE-BBCE-A97949BD3735}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
