@@ -1,0 +1,15 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="form-group panel-title">
+            <input type="text" class="form-control" id="filter" [(ngModel)]="filter" placeholder="Filter" (keyup)="doFilter()">
+        </div>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            <li *ngFor="let item of scriptSvc.data"
+                [class.active]="selected == item" >
+                <a (click)="onClick(item)" >{{item.Name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
