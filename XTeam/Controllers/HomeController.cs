@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,18 +14,31 @@ namespace XTeam.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Index(LoginViewModel model)
         {
-            ViewBag.Message = "Your application description page.";
+            //var accounts = SettingManager.Settings.Accounts;
+
+            //if (!accounts.Contains(model.UserName))
+            //{
+            //    ModelState.AddModelError("NotAuthorized", "You have not authorized login !!");
+            //}
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
             return View();
         }
+    }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+    public class LoginViewModel
+    {
+        [Required]
+        public string UserName { get; set; }
 
-            return View();
-        }
+        [Required]
+        public string Password { get; set; }
     }
 }
