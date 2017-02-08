@@ -4,11 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XTeam.Service;
+using XTeam.Service.Interface;
 
 namespace XTeam.Controllers
 {
     public class HomeController : Controller
     {
+        public IConfigService ConfigService { get; set; }
+
         public ActionResult Index()
         {
             return View();
@@ -17,19 +21,17 @@ namespace XTeam.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel model)
         {
-            //var accounts = SettingManager.Settings.Accounts;
+            if (!ConfigService.Accounts.Contains(model.UserName.ToLower()))
+            {
+                ModelState.AddModelError("NotAuthorized", "You have not authorized login !!");
+            }
 
-            //if (!accounts.Contains(model.UserName))
-            //{
-            //    ModelState.AddModelError("NotAuthorized", "You have not authorized login !!");
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
-
-            return View();
+            return RedirectToAction("Index", "Script");
         }
     }
 
@@ -39,6 +41,7 @@ namespace XTeam.Controllers
         public string UserName { get; set; }
 
         [Required]
+        [System.ComponentModel.DataAnnotations.Compare("UserName", ErrorMessage = "UserName or Password Error !!")]
         public string Password { get; set; }
     }
 }

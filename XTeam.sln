@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTeam.Tests", "XTeam.Tests\
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "XTeam.DB", "XTeam.DB\XTeam.DB.sqlproj", "{B1C5D019-F922-4CCE-BBCE-A97949BD3735}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6D271C1D-4776-4228-B5F2-BE914495DE11}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\fx.configuration.dll = Lib\fx.configuration.dll
+		Lib\fx.configuration.pdb = Lib\fx.configuration.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
