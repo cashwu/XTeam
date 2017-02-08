@@ -10,7 +10,7 @@ using XTeam.Models;
 
 namespace XTeam.Controllers
 {
-    public class ScriptController : Controller
+    public class ScriptController : BaseController
     {
         private XTeamEntities db = new XTeamEntities();
 

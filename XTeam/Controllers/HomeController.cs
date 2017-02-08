@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using XTeam.Models;
 using XTeam.Service;
 using XTeam.Service.Interface;
 
 namespace XTeam.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IConfigService ConfigService { get; set; }
 
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Index(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(LoginViewModel model)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(LoginViewModel model, string returnUrl)
         {
             if (!ConfigService.Accounts.Contains(model.UserName.ToLower()))
             {
@@ -31,17 +39,44 @@ namespace XTeam.Controllers
                 return View(model);
             }
 
+            SetAuthentication(model.UserName);
+
+            return RedirectToLocal(returnUrl);
+        }
+
+        private void SetAuthentication(string userName)
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userName)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims,
+                DefaultAuthenticationTypes.ApplicationCookie);
+
+            AuthenticationManager.SignIn(
+                new AuthenticationProperties
+                {
+                    IsPersistent = false,
+                    IssuedUtc = DateTime.UtcNow,
+                    ExpiresUtc = DateTime.UtcNow.Add(TimeSpan.FromMinutes(30))
+                },
+                claimsIdentity);
+        }
+
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             return RedirectToAction("Index", "Script");
         }
-    }
-
-    public class LoginViewModel
-    {
-        [Required]
-        public string UserName { get; set; }
-
-        [Required]
-        [System.ComponentModel.DataAnnotations.Compare("UserName", ErrorMessage = "UserName or Password Error !!")]
-        public string Password { get; set; }
     }
 }

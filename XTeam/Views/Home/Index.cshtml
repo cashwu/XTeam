@@ -1,4 +1,4 @@
-﻿@model XTeam.Controllers.LoginViewModel
+﻿@model XTeam.Models.LoginViewModel
 
 @{
     ViewBag.Title = "Login";
@@ -10,25 +10,30 @@
     <div class="col-md-12">
         <section id="loginForm">
 
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new
+            @using (Html.BeginForm("Index", "Home", new
+            {
+                ViewBag.ReturnUrl
+            },
+            FormMethod.Post, new
             {
                 @class = "form-horizontal",
                 novalidate = "novalidate"
             }))
             {
-                <hr>
+            @Html.AntiForgeryToken()
+            <hr>
 
-                @Html.ValidationSummary("", new { @class = "text-danger", style = "font-size: x-large;" })
+            @Html.ValidationSummary("", new { @class = "text-danger", style = "font-size: x-large;" })
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    @Html.LabelFor(a => a.UserName, new { @class = "col-md-2 control-label" })
+                @Html.LabelFor(a => a.UserName, new { @class = "col-md-2 control-label" })
 
-                    <div class="col-md-10">
+                <div class="col-md-10">
 
-                        @Html.TextBoxFor(a => a.UserName, new { @class = "form-control" })
-                    </div>
+                    @Html.TextBoxFor(a => a.UserName, new { @class = "form-control" })
                 </div>
+            </div>
                 <div class="form-group">
 
                     @Html.LabelFor(a => a.Password, new { @class = "col-md-2 control-label" })
