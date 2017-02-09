@@ -1,11 +1,10 @@
-﻿CREATE TABLE [dbo].[BackupScripts]
+﻿CREATE TABLE [dbo].[Scripts]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
-	ScriptId INT,
 	Name NVARCHAR(100),
 	SqlCommand NVARCHAR(MAX),
 	CreatedBy NVARCHAR(50),
 	CreatedOn DATETIME2,
 	ModifiedBy NVARCHAR(50),
-	ModifiedOn DATETIME2
+	ModifiedOn DATETIME2,
 )
