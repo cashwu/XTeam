@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace XTeam
 {
@@ -23,9 +22,22 @@ namespace XTeam
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                        "~/Scripts/Vue/vue.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/codemirror").Include(
+                        "~/Scripts/Codemirror/codemirror.js",
+                        "~/Scripts/Codemirror/show-hint.js",
+                        "~/Scripts/Codemirror/sql-hint.js",
+                        "~/Scripts/Codemirror/sql.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                "~/Content/bootstrap.css",
+                "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/codemirror").Include(
+                        "~/Content/Codemirror/codemirror.css",
+                        "~/Content/Codemirror/show-hint.css"));
         }
     }
 }

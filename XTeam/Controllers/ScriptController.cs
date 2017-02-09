@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using XTeam.Models;
 
@@ -12,22 +8,18 @@ namespace XTeam.Controllers
 {
     public class ScriptController : BaseController
     {
-        private XTeamEntities db = new XTeamEntities();
-
-        // GET: Script
         public ActionResult Index()
         {
-            return View(db.Scripts.ToList());
+            return View(Db.Scripts.ToList());
         }
 
-        // GET: Script/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Scripts scripts = db.Scripts.Find(id);
+            Scripts scripts = Db.Scripts.Find(id);
             if (scripts == null)
             {
                 return HttpNotFound();
@@ -35,7 +27,6 @@ namespace XTeam.Controllers
             return View(scripts);
         }
 
-        // GET: Script/Create
         public ActionResult Create()
         {
             return View();
@@ -50,8 +41,8 @@ namespace XTeam.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Scripts.Add(scripts);
-                db.SaveChanges();
+                Db.Scripts.Add(scripts);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +56,7 @@ namespace XTeam.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Scripts scripts = db.Scripts.Find(id);
+            Scripts scripts = Db.Scripts.Find(id);
             if (scripts == null)
             {
                 return HttpNotFound();
@@ -82,8 +73,8 @@ namespace XTeam.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(scripts).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(scripts).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(scripts);
@@ -96,7 +87,7 @@ namespace XTeam.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Scripts scripts = db.Scripts.Find(id);
+            Scripts scripts = Db.Scripts.Find(id);
             if (scripts == null)
             {
                 return HttpNotFound();
@@ -109,9 +100,9 @@ namespace XTeam.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Scripts scripts = db.Scripts.Find(id);
-            db.Scripts.Remove(scripts);
-            db.SaveChanges();
+            Scripts scripts = Db.Scripts.Find(id);
+            Db.Scripts.Remove(scripts);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -119,7 +110,7 @@ namespace XTeam.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                Db.Dispose();
             }
             base.Dispose(disposing);
         }
