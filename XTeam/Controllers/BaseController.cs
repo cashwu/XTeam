@@ -9,5 +9,14 @@ namespace XTeam.Controllers
         protected bool IsAuth => HttpContext.User.Identity.IsAuthenticated;
 
         protected XTeamEntities Db => new XTeamEntities();
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

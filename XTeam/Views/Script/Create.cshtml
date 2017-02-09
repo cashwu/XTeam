@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var sqlCommand = Model == null ? string.Empty : Model.SqlCommand;
 }
 
 @section Style {
@@ -19,7 +21,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="sqlCommand">Script Name</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -27,10 +29,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SqlCommand, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="sqlCommand">SQL Command</label>
+            
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SqlCommand, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SqlCommand, "", new { @class = "text-danger" })
+                <textarea id="sqlCommand" class="form-control input-lg" rows="10">@(sqlCommand)</textarea>
+                @Html.ValidationMessage("sqlCommandText", "", new { @class = "text-danger", @id = "sqlCmdError" })
+                @Html.Hidden("sqlCommandText", sqlCommand)
             </div>
         </div>
 

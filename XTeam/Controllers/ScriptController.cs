@@ -105,14 +105,5 @@ namespace XTeam.Controllers
             Db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
