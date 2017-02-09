@@ -20,10 +20,12 @@ namespace XTeam
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/Sweetalert/sweetalert.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/vue").Include(
-                        "~/Scripts/Vue/vue.js"));
+                        "~/Scripts/Vue/vue.js",
+                        "~/Scripts/Vue/vue-table.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/codemirror").Include(
                         "~/Scripts/Codemirror/codemirror.js",
@@ -33,7 +35,8 @@ namespace XTeam
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/site.css"));
+                "~/Content/site.css",
+                "~/Content/Sweetalert/sweetalert.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/codemirror").Include(
                         "~/Content/Codemirror/codemirror.css",

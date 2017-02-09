@@ -227,6 +227,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Codemirror\codemirror.css" />
     <Content Include="Content\Codemirror\show-hint.css" />
+    <Content Include="Content\Sweetalert\sweetalert.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -284,6 +285,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Sweetalert\sweetalert.min.js" />
+    <Content Include="Scripts\Vue\vue-table.js" />
     <Content Include="Scripts\Vue\vue.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
