@@ -24,14 +24,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SqlCommand)
-        </dt>
-
-        <dd>
-            <textarea id="sqlCommand" class="form-control input-lg" rows="10">@Model.SqlCommand</textarea>
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
 
@@ -61,6 +53,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.SqlCommand)
+        </dt>
+
+        <dd>
+            <textarea id="sqlCommand" class="form-control input-lg" rows="10">@Model.SqlCommand</textarea>
         </dd>
 
     </dl>

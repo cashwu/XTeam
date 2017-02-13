@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Style {
+    @Styles.Render("~/Content/codemirror")
+}
+
 <h2>Details</h2>
 
 <div>
-    <h4>Scripts</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -18,15 +21,7 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SqlCommand)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SqlCommand)
-        </dd>
-
+        
         <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
@@ -58,6 +53,14 @@
         <dd>
             @Html.DisplayFor(model => model.ModifiedOn)
         </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.SqlCommand)
+        </dt>
+
+        <dd>
+            <textarea id="sqlCommand" class="form-control input-lg" rows="10">@Model.SqlCommand</textarea>
+        </dd>
 
     </dl>
 </div>
@@ -65,3 +68,41 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/codemirror")
+
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            mounted: function () {
+
+                window.editor = window.editor || {};
+
+                var sqlcmd = document.getElementById("sqlCommand");
+
+                window.editor = CodeMirror.fromTextArea(sqlcmd,
+                {
+                    mode: "text/x-mssql",
+                    indentWithTabs: true,
+                    smartIndent: true,
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    matchBrackets: true,
+                    autofocus: false,
+                    readOnly: true,
+                    firstLineNumber: 1,
+                    extraKeys: { "Tab": "autocomplete" }
+                });
+
+                window.editor.setOption("theme", "default");
+                window.editor.refresh();
+            }
+        });
+
+    </script>
+}
