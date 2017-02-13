@@ -6,19 +6,19 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ScriptsService {
 
-  data : Script[];
-  odata : Script[];
+  data: Script[];
+  odata: Script[];
 
   constructor(private http: Http) {
-    this.http.get("/api/script.json")
-    .map((res) => res.json())
-    .subscribe((value) =>{
-       this.data = value;
-       this.odata = value;
+    this.http.get("/api/scriptapi/GetAll")
+      .map((res) => res.json())
+      .subscribe((value) => {
+        this.data = value;
+        this.odata = value;
       });
   }
 
-  doSearch(filter : string) {
+  doSearch(filter: string) {
     this.data = this.odata;
 
     this.data = this.data.filter((value) => {
@@ -28,6 +28,11 @@ export class ScriptsService {
 }
 
 export class Script {
+  Id: string;
   Name: string;
-  Script: string;
+  SqlCommand: string;
+  CreatedBy: string;
+  CreatedOn: Date;
+  ModifiedBy: string;
+  ModifiedOn: Date;
 }

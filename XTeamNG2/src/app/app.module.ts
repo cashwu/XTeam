@@ -4,23 +4,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { CodemirrorModule } from 'ng2-codemirror';
-
 import { AppComponent } from './app.component';
 import { ScriptlistComponent } from './scriptlist/scriptlist.component';
 import { ScriptdetailComponent } from './scriptdetail/scriptdetail.component';
+import { CodemirrorComponent } from './codemirror/codemirror.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScriptlistComponent,
-    ScriptdetailComponent
+    ScriptdetailComponent,
+    CodemirrorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    CodemirrorModule
+    HttpModule
   ],
   providers: [ScriptsService],
   bootstrap: [AppComponent]

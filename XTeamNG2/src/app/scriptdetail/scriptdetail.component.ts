@@ -13,11 +13,9 @@ export class ScriptdetailComponent implements OnInit {
     config : Object;
 
     constructor() {
-      this.config = { lineNumbers: true, mode: "text/x-mysql", readOnly : true };
     }
 
     ngOnInit() {
-
     }
 
     onCopyClick(){

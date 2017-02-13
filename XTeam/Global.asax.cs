@@ -24,6 +24,8 @@ namespace XTeam
             AutofacConfig.Bootstrapper();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
+
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
     }
 }

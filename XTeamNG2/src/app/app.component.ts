@@ -20,6 +20,6 @@ export class AppComponent {
   }
 
   onNotify(script: Script) {
-    this.scriptContent = script ? script.Script : "";
+    this.scriptContent = script ? script.SqlCommand : "";
   }
 }
