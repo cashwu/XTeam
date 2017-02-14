@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -37,7 +36,7 @@ namespace XTeam.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,SqlCommand")] Scripts scripts)
+        public ActionResult Create([Bind(Include = "Name,SqlCommand")] Scripts script)
         {
             if (!ModelState.IsValid)
             {
@@ -48,14 +47,14 @@ namespace XTeam.Controllers
                 });
             }
 
-            scripts.CreatedBy = UserName;
-            scripts.CreatedOn = DateTime.Now;
-            Db.Scripts.Add(scripts);
+            script.CreatedBy = UserName;
+            script.CreatedOn = DateTime.Now;
+            Db.Scripts.Add(script);
             Db.SaveChanges();
 
-            if (scripts.Id != 0)
+            if (script.Id != 0)
             {
-               SetBackupScript(scripts, Remark.Insert);
+               SetBackupScript(script, Remark.Insert);
             }
 
             return Json(new
@@ -81,15 +80,42 @@ namespace XTeam.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,SqlCommand")] Scripts scripts)
+        public ActionResult Edit([Bind(Include = "Id,Name,SqlCommand")] Scripts script)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Db.Entry(scripts).State = EntityState.Modified;
-                Db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Message = "Edit failed !!"
+                });
             }
-            return View(scripts);
+
+            var oldScript = Db.Scripts.FirstOrDefault(a => a.Id == script.Id);
+            if (oldScript == null)
+            {
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Message = "Edit failed !!"
+                });
+            }
+
+            oldScript.ModifiedBy = UserName;
+            oldScript.ModifiedOn = DateTime.Now;
+            oldScript.Name = script.Name;
+            oldScript.SqlCommand = script.SqlCommand;
+
+            Db.SaveChanges();
+
+            SetBackupScript(oldScript, Remark.Update);
+
+            return Json(new
+            {
+                IsSuccess = true,
+                Message = "Edit Success !!"
+            });
+            
         }
 
         public ActionResult Delete(int? id)
@@ -141,3 +167,4 @@ namespace XTeam.Controllers
         }
     }
 }
+

@@ -8,7 +8,7 @@
 <h2>Manage Scripts</h2>
 
 <p>
-    @Html.ActionLink("Create New script", "Create")
+    <a href="@Url.Action("Create", "Script")" class="btn btn-primary">Create New script</a> 
 </p>
 <table class="table">
     <tr>
@@ -54,9 +54,9 @@
             @Html.DisplayFor(modelItem => item.ModifiedOn)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="@Url.Action("Edit", "Script", new { id = item.Id })" class="btn btn-info">Edit</a> 
+            <a href="@Url.Action("Details", "Script", new { id = item.Id })" class="btn btn-primary">Details</a> 
+            <a href="@Url.Action("Delete", "Script", new { id = item.Id })" class="btn btn-danger">Delete</a> 
         </td>
     </tr>
 }
@@ -246,7 +246,7 @@
                     this.moreParams = [
                         'filter=' + this.searchFor
                     ];
-                    this.$nextTick(function() {
+                    this.$nextTick(function () {
                         this.$broadcast('vuetable:refresh');
                     });
                 },
@@ -381,6 +381,6 @@
                     }
                 }
             }
-        })
+        });
     </script>
 }

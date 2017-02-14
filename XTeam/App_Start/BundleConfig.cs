@@ -36,11 +36,9 @@ namespace XTeam
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/site.css",
-                "~/Content/Sweetalert/sweetalert.min.css"));
-
-            bundles.Add(new StyleBundle("~/Content/codemirror").Include(
-                        "~/Content/Codemirror/codemirror.css",
-                        "~/Content/Codemirror/show-hint.css"));
+                "~/Content/Sweetalert/sweetalert.min.css",
+                "~/Content/Codemirror/codemirror.css",
+                "~/Content/Codemirror/show-hint.css"));
         }
     }
 }
