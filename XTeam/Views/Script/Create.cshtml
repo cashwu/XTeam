@@ -84,15 +84,17 @@
             methods : {
                 onSubmit : function() {
 
+                    var sqlCommand = this.GetSqlCommand();
+
                     if ($.trim(this.name) === ""
-                        || this.sqlCommand === "") {
+                        || sqlCommand === "") {
                         alert("Input is not valid !!");
                         return;
                     }
 
                     var data = {
                         Name: this.name,
-                        SqlCommand: this.sqlCommand,
+                        SqlCommand: sqlCommand,
                         __RequestVerificationToken : this.token
                     };
 
@@ -113,13 +115,13 @@
                 Clear:function() {
                     this.name = "";
                     window.editor.setValue("");
+                },
+                GetSqlCommand : function() {
+                    var val = window.editor.getValue();
+                    return $.trim(val);
                 }
             },
             computed : {
-                sqlCommand: function () {
-                    var val = window.editor.getValue();
-                    return $.trim(val);
-                },
                 token:function() {
                     return $("input[name='__RequestVerificationToken']").val();
                 }
