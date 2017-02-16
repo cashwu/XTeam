@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>X Team</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="content/bootstrap.min.css" rel="stylesheet">
+    <link href="content/codemirror.css" rel="stylesheet">
+    <style>
+        .nav {
+            height: 30em;
+            line-height: 2em;
+            padding: 0;
+            margin: 0;
+            overflow: scroll;
+            overflow-x: hidden;
+            cursor: pointer;
+        }
+        
+        .CodeMirror {
+            display: block;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+
+        <div class="page-header">
+            <h1>X Team</h1>
+        </div>
+        <div class="row marketing ">
+
+            <div class="col-lg-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="form-group panel-title">
+                            <input type="text" class="form-control" id="filter" placeholder="Filter" v-on:keyup="filter" v-model="Filter">
+                        </div>
+                    </div>
+                    <div class="panel-body ">
+                        <ul class="nav nav-pills nav-stacked ">
+                            <li v-for="scriptName in ScriptNames">
+                                <a v-on:click=clickName(scriptName.Id)>{{scriptName.Name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="padding-top:0px; padding-bottom:8px;">
+                        <div style="display: inline-block;">
+                            <input type="button" class="btn btn-default" id="btnCopy" value="Copy" style="margin-top:15px;">
+                        </div>
+                        <div style="display: inline-table; margin-left:25px;">
+                            <div style="display: table-row;">
+                                <span>CreatedBy : {{ Script.CreatedBy }} </span>
+                                <span style="margin-left:30px;">CreatedOn : {{ Script.CreatedOn }} </span>
+                            </div>
+                            <div style="display: table-row;">
+                                <span>ModifiedBy : {{ Script.ModifiedBy }} </span>
+                                <span style="margin-left:30px;">ModifiedOn : {{ Script.ModifiedOn }} </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 445px;">
+                        <textarea id="sqlCommand" class="form-control input-lg">{{SqlCommand}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="footer ">
+            <p>&copy; 2016 X Team</p>
+        </footer>
+
+    </div>
+</body>
+
+<script src="script/vue.js"></script>
+<script src="script/codemirror.js"></script>
+<script src="script/sql.js"></script>
+<script src="script/clipboard.min.js"></script>
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+<script>
+    require('dotenv').config();
+
+    var app = new Vue({
+        el: '#app',
+        mounted: function() {
+
+            window.host = process.env.IsProd === "true" ? process.env.ProdHost : process.env.LocalHost;
+
+            window.host = window.host ? window.host : "http://dba-sb-prod.coreop.net:1234";
+            console.log(window.host, "host");
+
+            $.ajax({
+                url: window.host + "/api/scriptapi/GetScriptName",
+                type: "GET",
+                success: function(data) {
+                    app.ScriptNames = data;
+                    app.OldScriptNames = data;
+                },
+                error: function(xhr, ajaxOptions, thrownError) {}
+            });
+
+            window.editor = window.editor || {};
+
+            var sqlcmd = document.getElementById("sqlCommand");
+
+            window.editor = CodeMirror.fromTextArea(sqlcmd, {
+                mode: "text/x-mssql",
+                indentWithTabs: true,
+                smartIndent: true,
+                lineNumbers: true,
+                lineWrapping: true,
+                matchBrackets: true,
+                autofocus: false,
+                readOnly: true,
+                firstLineNumber: 1
+            });
+
+            window.editor.setOption("theme", "default");
+            window.editor.refresh();
+            $(".CodeMirror").css("border-style", "groove");
+
+            var clipboard = new Clipboard("#btnCopy", {
+                text: function(trigger) {
+                    return window.editor.getValue();
+                }
+            });
+
+            clipboard.on("success", function(e) {
+                alert("Copy Success !!");
+            });
+        },
+        data: {
+            OldScriptNames: [],
+            ScriptNames: [],
+            Script: {},
+            SqlCommand: "",
+            Filter: ""
+        },
+        methods: {
+            clickName: function(id) {
+                $.ajax({
+                    url: window.host + "/api/scriptapi/GetScriptById?id=" + id,
+                    type: "GET",
+                    success: function(data) {
+                        app.Script = data;
+                        window.editor.setValue(data.SqlCommand);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {}
+                });
+            },
+            filter: function() {
+                this.ScriptNames = this.OldScriptNames;
+
+                this.ScriptNames = this.ScriptNames.filter((ScriptName) => {
+                    return ScriptName.Name.toLocaleLowerCase().indexOf(app.Filter.toLocaleLowerCase()) > -1;
+                });
+            }
+        }
+    });
+</script>
+
+</html>

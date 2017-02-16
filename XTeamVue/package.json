@@ -1,25 +1,20 @@
 {
-  "name": "XTeam",
-  "version": "1.0.0",
-  "description": "XTeam Tool",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^1.4.1"
-  },
-  "dependencies": {
-    "jquery": "^3.1.1"
-  }
+    "name": "XTeam",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "build –-win --x64"
+    },
+    "devDependencies": {
+        "electron": "~1.4.1",
+        "electron-builder": "^7.15.0"
+    },
+    "build": {
+        "appId": "cash.xteam",
+        "win": {
+            "msi": true,
+            "title": "XTeam",
+            "version": "1.0.0",
+            "publisher": "Cash"
+        }
+    }
 }
