@@ -24,18 +24,28 @@
             display: block;
             height: 100%;
         }
+        
+        .script {
+            word-break: break-all;
+        }
     </style>
 </head>
 
 <body>
     <div id="app" class="container">
 
-        <div class="page-header">
+        <div class="page-header" style="margin-top:20px;">
             <h1>X Team</h1>
         </div>
-        <div class="row marketing ">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-10" style="margin-bottom: 10px;">
+                <input type="button" class="btn btn-info" id="btnReload" value="Reload" v-on:click="reload">
+            </div>
+        </div>
 
-            <div class="col-lg-3">
+        <div class="row">
+
+            <div class="col-md-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="form-group panel-title">
@@ -45,14 +55,14 @@
                     <div class="panel-body ">
                         <ul class="nav nav-pills nav-stacked ">
                             <li v-for="scriptName in ScriptNames">
-                                <a v-on:click=clickName(scriptName.Id)>{{scriptName.Name}}</a>
+                                <a class="script" v-on:click=clickName(scriptName.Id)>{{scriptName.Name}}</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-9">
+            <div class="col-md-9">
                 <div class="panel panel-primary">
                     <div class="panel-heading" style="padding-top:0px; padding-bottom:8px;">
                         <div style="display: inline-block;">
@@ -78,19 +88,40 @@
         </div>
 
         <footer class="footer ">
-            <p>&copy; 2016 X Team</p>
+            <p data-toggle="modal" data-target="#versionModal">&copy; 2016 X Team {{Version}}</p>
         </footer>
 
     </div>
+
+    <div class="modal fade" id="versionModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Version</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    # v1.0.2 
+                    <br>- script name can break
+                    <br>- add reload button reload script name
+                    <br>- add version modal
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
 <script src="script/vue.js"></script>
 <script src="script/codemirror.js"></script>
 <script src="script/sql.js"></script>
 <script src="script/clipboard.min.js"></script>
-<script>
-    window.$ = window.jQuery = require('jquery');
-</script>
+<script src="script/bootstrap.min.js"></script>
+
 <script>
     require('dotenv').config();
 
@@ -148,7 +179,8 @@
             ScriptNames: [],
             Script: {},
             SqlCommand: "",
-            Filter: ""
+            Filter: "",
+            Version: "1.0.2"
         },
         methods: {
             clickName: function(id) {
@@ -168,6 +200,21 @@
                 this.ScriptNames = this.ScriptNames.filter((ScriptName) => {
                     return ScriptName.Name.toLocaleLowerCase().indexOf(app.Filter.toLocaleLowerCase()) > -1;
                 });
+            },
+            reload: function() {
+                $.ajax({
+                    url: window.host + "/api/scriptapi/GetScriptName",
+                    type: "GET",
+                    success: function(data) {
+                        app.ScriptNames = data;
+                        app.OldScriptNames = data;
+                        alert("Reload Success !!");
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {}
+                });
+            },
+            version : function(){
+                $("#versionModal").modal("toggle");
             }
         }
     });
