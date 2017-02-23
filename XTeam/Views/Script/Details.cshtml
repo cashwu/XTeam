@@ -76,27 +76,30 @@
         var app = new Vue({
             el: '#app',
             mounted: function () {
+                this.initCodeMirror();
+            },
+            methods: {
+                initCodeMirror: function () {
 
-                window.editor = window.editor || {};
+                    var sqlcmd = document.getElementById("sqlCommand");
 
-                var sqlcmd = document.getElementById("sqlCommand");
+                    var editor = CodeMirror.fromTextArea(sqlcmd,
+                    {
+                        mode: "text/x-mssql",
+                        indentWithTabs: true,
+                        smartIndent: true,
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        matchBrackets: true,
+                        autofocus: false,
+                        readOnly: true,
+                        firstLineNumber: 1,
+                        extraKeys: { "Tab": "autocomplete" }
+                    });
 
-                window.editor = CodeMirror.fromTextArea(sqlcmd,
-                {
-                    mode: "text/x-mssql",
-                    indentWithTabs: true,
-                    smartIndent: true,
-                    lineNumbers: true,
-                    lineWrapping: true,
-                    matchBrackets: true,
-                    autofocus: false,
-                    readOnly: true,
-                    firstLineNumber: 1,
-                    extraKeys: { "Tab": "autocomplete" }
-                });
-
-                window.editor.setOption("theme", "default");
-                window.editor.refresh();
+                    editor.setOption("theme", "default");
+                    editor.refresh();
+                }
             }
         });
 
