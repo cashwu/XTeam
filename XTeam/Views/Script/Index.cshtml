@@ -82,13 +82,13 @@
                         });
                 },
                 EditUrl: function(id) {
-                    return "@Url.Action("Edit", "Script")" + "?" + id;
+                    return "@Url.Action("Edit", "Script")" + "?id=" + id;
                 },
                 DetailsUrl: function(id) {
-                    return "@Url.Action("Details", "Script")" + "?" + id;
+                    return "@Url.Action("Details", "Script")" + "?id=" + id;
                 },
                 DeleteUrl: function(id) {
-                    return "@Url.Action("Delete", "Script")" + "?" + id;
+                    return "@Url.Action("Delete", "Script")" + "?id=" + id;
                 },
                 filter: function() {
                     this.data = this.olddata;
