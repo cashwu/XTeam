@@ -14,12 +14,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - XTeam</p>
+            <p>&copy; @DateTime.Now.Year - XTeam v.@typeof(XTeam.MvcApplication).Assembly.GetName().Version </p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/xteam")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/vue")
     @RenderSection("scripts", required: false)

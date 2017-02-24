@@ -11,7 +11,7 @@ namespace XTeam.Controllers
     {
         public ActionResult Index()
         {
-            return View(Db.Scripts.ToList());
+            return View();
         }
 
         public ActionResult Details(int? id)

@@ -23,9 +23,11 @@ namespace XTeam
                       "~/Scripts/respond.js",
                       "~/Scripts/Sweetalert/sweetalert.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/xteam").Include(
+                        "~/Scripts/XTeam/xteam.utility.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/vue").Include(
-                        "~/Scripts/Vue/vue.js",
-                        "~/Scripts/Vue/vue-table.js"));
+                        "~/Scripts/Vue/vue.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/codemirror").Include(
                         "~/Scripts/Codemirror/codemirror.js",

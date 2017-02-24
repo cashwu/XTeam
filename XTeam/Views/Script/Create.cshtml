@@ -46,45 +46,19 @@
     @Scripts.Render("~/bundles/codemirror")
 
     <script>
-        
+
         var app = new Vue({
             el: '#app',
             mounted: function () {
-
-                window.editor = window.editor || {};
-
-                var sqlcmd = document.getElementById("sqlCommand");
-
-                window.editor = CodeMirror.fromTextArea(sqlcmd,
-                {
-                    mode: "text/x-mssql",
-                    indentWithTabs: true,
-                    smartIndent: true,
-                    lineNumbers: true,
-                    lineWrapping: true,
-                    matchBrackets: true,
-                    autofocus: false,
-                    readOnly: false,
-                    firstLineNumber: 1,
-                    extraKeys: { "Tab": "autocomplete" }, // To invoke the auto complete
-                    hint: CodeMirror.hint.sql,
-                    hintOptions: {
-                        tables: {
-
-                        }
-                    }
-                });
-
-                window.editor.setOption("theme", "default");
-                window.editor.refresh();
+                xteam.codeMirror.SetCodeMirrorById("sqlCommand");
             },
             data: {
                 name: ""
             },
-            methods : {
+            methods: {
                 onSubmit : function() {
 
-                    var sqlCommand = this.GetSqlCommand();
+                    var sqlCommand = xteam.codeMirror.GetCodeMirrorValue();
 
                     if ($.trim(this.name) === ""
                         || sqlCommand === "") {
@@ -100,29 +74,22 @@
 
                     this.AjaxPost(data);
                 },
-                AjaxPost:function(data) {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("Create", "Script")",
-                        data: data,
-                        dataType: "json",
-                        success: function (response) {
-                            alert(response.Message);
-                            app.Clear();
-                        }
+                AjaxPost: function (data) {
+
+                    var url = "@Url.Action("Create", "Script")";
+
+                    xteam.http.AjaxPost(url, data, function(response) {
+                        alert(response.Message);
+                        app.Clear();
                     });
                 },
-                Clear:function() {
+                Clear: function () {
                     this.name = "";
-                    window.editor.setValue("");
-                },
-                GetSqlCommand : function() {
-                    var val = window.editor.getValue();
-                    return $.trim(val);
+                    xteam.codeMirror.ClearCodeMirror();
                 }
             },
-            computed : {
-                token:function() {
+            computed: {
+                token: function () {
                     return $("input[name='__RequestVerificationToken']").val();
                 }
             }

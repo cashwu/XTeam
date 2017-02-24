@@ -83,27 +83,7 @@
         var app = new Vue({
             el: '#app',
             mounted: function () {
-
-                window.editor = window.editor || {};
-
-                var sqlcmd = document.getElementById("sqlCommand");
-
-                window.editor = CodeMirror.fromTextArea(sqlcmd,
-                {
-                    mode: "text/x-mssql",
-                    indentWithTabs: true,
-                    smartIndent: true,
-                    lineNumbers: true,
-                    lineWrapping: true,
-                    matchBrackets: true,
-                    autofocus: false,
-                    readOnly: true,
-                    firstLineNumber: 1,
-                    extraKeys: { "Tab": "autocomplete" }
-                });
-
-                window.editor.setOption("theme", "default");
-                window.editor.refresh();
+                xteam.codeMirror.SetCodeMirrorById("sqlCommand", true);
             }
         });
 
