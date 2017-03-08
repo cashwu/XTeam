@@ -80,8 +80,8 @@ namespace XTeam.Controllers
         }
 
         [HttpPost]
-        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit([Bind(Include = "Id,Name,SqlCommand")] Scripts script)
         {
             if (!ModelState.IsValid)
