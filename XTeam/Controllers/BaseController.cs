@@ -11,5 +11,10 @@ namespace XTeam.Controllers
         protected bool IsAuth => HttpContext.User.Identity.IsAuthenticated;
 
         protected string UserName => HttpContext.User.Identity.Name;
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            base.OnException(filterContext);
+        }
     }
 }

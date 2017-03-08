@@ -36,6 +36,7 @@ namespace XTeam.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Name,SqlCommand")] Scripts script)
         {
             if (!ModelState.IsValid)
@@ -79,6 +80,7 @@ namespace XTeam.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,SqlCommand")] Scripts script)
         {
